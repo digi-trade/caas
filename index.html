@@ -357,22 +357,9 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id='5ea2e0cde2'>简介</h1>
-<blockquote>
-<p>To authorize, use this code:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="p">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
+        <h1 id='5ea2e0cde2'>简介</h1><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
 curl <span class="s2">"api_endpoint_here"</span> <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
@@ -467,9 +454,19 @@ All request bodies should have content type application/json and be valid JSON.<
 <td>系统建议 <code>SUGGEST_TO_ACCEPT,SUGGEST_TO_REJECT,NO_SUGGESTION</code></td>
 </tr>
 <tr>
+<td>suggestion_comment</td>
+<td>string</td>
+<td>系统建议的人工备注</td>
+</tr>
+<tr>
 <td>decision</td>
 <td>string(ENUM)</td>
 <td>客户决定 <code>REJECT, ACCEPT</code></td>
+</tr>
+<tr>
+<td>decision_comment</td>
+<td>string</td>
+<td>客户决定的人工备注</td>
 </tr>
 <tr>
 <td>ogs</td>
@@ -609,8 +606,8 @@ All request bodies should have content type application/json and be valid JSON.<
 <p>针对特定KYC Case提供最终KYC决定，caseResult为枚举型String：</p>
 
 <ul>
-<li>Accept</li>
-<li>Reject</li>
+<li>ACCEPT</li>
+<li>REJECT</li>
 </ul>
 <h3 id='http-request-5'>HTTP Request</h3>
 <p><code>POST https://caas.cabital.com/api/v1/cases/&lt;UUID&gt;/decision</code></p>
@@ -645,7 +642,7 @@ All request bodies should have content type application/json and be valid JSON.<
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"caseSystemId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6d92e7b4-715c-4ce3-a028-19f1c8c9fa6c"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"caseSuggestion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUGGEST_TO_REJECT"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User is okay to "</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User is okay to me."</span><span class="p">,</span><span class="w">
     </span><span class="nl">"externalCaseId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"243d19cf-562f-4060-89fa-1d35a7723c3e"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
