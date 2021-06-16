@@ -350,30 +350,22 @@
           </li>
       </ul>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
+            <li><a href='mail:support@cabital.com'>申请使用</a></li>
             <li><a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id='5ea2e0cde2'>简介</h1><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span> <span class="se">\</span>
-  <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre></div>
-<blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
-</blockquote>
+        <h1 id='5ea2e0cde2'>简介</h1>
+<p>欢迎使用Cabital API，Cabital API 使开发人员能够将cabital专业、安全、可靠的筛查服务集成到现有工作流中，以帮助简化KYC的流程。</p>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<p>API 功能简介：
+- 提供个人用户或企业用户的名单筛查能力
+- 根据合作伙伴的合规策略，进行筛查结果排查，提供建议
+- 从行业领先的数据库持续检索筛查存量客户的能力</p>
 
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code>Authorization: meowmeowmeow</code></p>
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
+<p>您可以根据本文档提供的API来使用服务，支持的全部API请参见KYC Case</p>
 <h1 id='api'>API 认证</h1>
 <p>API key is recommend if you only need to access your own account. All API key requests must be signed and contain the following headers:</p>
 
@@ -506,7 +498,9 @@ All request bodies should have content type application/json and be valid JSON.<
 </tr>
 </tbody></table>
 <h2 id='kyc-case-3'>创建 KYC Case</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://caas.cabital.com/api/v1/cases"</span> <span class="se">\</span>
-  <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
+  <span class="nt">-H</span> <span class="s2">"ACCESS-KEY: YOUR_KEY"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"ACCESS-SIGN: SIGN_KEY"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"ACCESS-TIMESTAMP: 1623828308"</span> <span class="se">\</span>
   <span class="nt">-X</span> POST
 </code></pre></div>
 <blockquote>
@@ -521,18 +515,25 @@ All request bodies should have content type application/json and be valid JSON.<
 客户在打开 _Zero Footprint_ 的配置下，创建 KYC Case 将自动触发一次性扫描!
 </aside>
 <h2 id='kyc-case-4'>获取特定的 KYC Case</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://caas.cabital.com/api/v1/cases/2"</span> <span class="se">\</span>
-  <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
+  <span class="nt">-H</span> <span class="s2">"ACCESS-KEY: YOUR_KEY"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"ACCESS-SIGN: SIGN_KEY"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"ACCESS-TIMESTAMP: 1623828308"</span>
 </code></pre></div>
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-</span><span class="p">}</span><span class="w">
+  </span><span class="nl">"externalCaseId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"243d19cf-562f-4060-89fa-1d35a7723c3e"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"screenType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INDIVIDUAL"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">INDIVIDUAL</span><span class="p">,</span><span class="w"> </span><span class="err">ORGANISATION</span><span class="w">
+  </span><span class="nl">"fullName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"individualInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MALE"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"dob"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2002-02-02"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"nationality"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JPN"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"residentialCountry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HKG"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"organizationInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>This endpoint retrieves a specific kitten.</p>
 <h3 id='http-request-2'>HTTP Request</h3>
@@ -551,7 +552,9 @@ All request bodies should have content type application/json and be valid JSON.<
 </tbody></table>
 <h2 id='kyc-case-5'>打开特定 KYC Case 的持续性扫描</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://caas.cabital.com/api/v1/cases/6d92e7b4-715c-4ce3-a028-19f1c8c9fa6c/ogs"</span> <span class="se">\</span>
   <span class="nt">-X</span> POST <span class="se">\</span>
-  <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
+  <span class="nt">-H</span> <span class="s2">"ACCESS-KEY: YOUR_KEY"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"ACCESS-SIGN: SIGN_KEY"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"ACCESS-TIMESTAMP: 1623828308"</span> 
 </code></pre></div>
 <blockquote>
 <p>HTTP返回 (201)</p>
