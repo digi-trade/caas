@@ -321,19 +321,19 @@
                     <a href="#87e1fa1612" class="toc-h2 toc-link" data-title="资源描述">资源描述</a>
                   </li>
                   <li>
-                    <a href="#kyc-case-3" class="toc-h2 toc-link" data-title="创建 KYC Case">创建 KYC Case</a>
+                    <a href="#kyc-case-2" class="toc-h2 toc-link" data-title="创建 KYC Case">创建 KYC Case</a>
                   </li>
                   <li>
-                    <a href="#kyc-case-4" class="toc-h2 toc-link" data-title="获取特定的 KYC Case">获取特定的 KYC Case</a>
+                    <a href="#kyc-case-3" class="toc-h2 toc-link" data-title="获取特定的 KYC Case">获取特定的 KYC Case</a>
                   </li>
                   <li>
-                    <a href="#kyc-case-5" class="toc-h2 toc-link" data-title="打开特定 KYC Case 的持续性扫描">打开特定 KYC Case 的持续性扫描</a>
+                    <a href="#kyc-case-4" class="toc-h2 toc-link" data-title="打开特定 KYC Case 的持续性扫描">打开特定 KYC Case 的持续性扫描</a>
                   </li>
                   <li>
-                    <a href="#kyc-case-6" class="toc-h2 toc-link" data-title="关闭特定 KYC Case 的持续性扫描">关闭特定 KYC Case 的持续性扫描</a>
+                    <a href="#kyc-case-5" class="toc-h2 toc-link" data-title="关闭特定 KYC Case 的持续性扫描">关闭特定 KYC Case 的持续性扫描</a>
                   </li>
                   <li>
-                    <a href="#kyc-case-7" class="toc-h2 toc-link" data-title="提供特定 KYC Case 的最终决定">提供特定 KYC Case 的最终决定</a>
+                    <a href="#kyc-case-6" class="toc-h2 toc-link" data-title="提供特定 KYC Case 的最终决定">提供特定 KYC Case 的最终决定</a>
                   </li>
               </ul>
           </li>
@@ -341,7 +341,7 @@
             <a href="#webhook" class="toc-h1 toc-link" data-title="Webhook">Webhook</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#kyc-case-8" class="toc-h2 toc-link" data-title="KYC Case 扫描回调">KYC Case 扫描回调</a>
+                    <a href="#kyc-case-7" class="toc-h2 toc-link" data-title="KYC Case 扫描回调">KYC Case 扫描回调</a>
                   </li>
               </ul>
           </li>
@@ -389,7 +389,7 @@ All request bodies should have content type application/json and be valid JSON.<
 <p>Read more about API keys.</p>
 
 <aside class="warning">You should never request API keys or secrets from other users.</aside>
-<h1 id='kyc-case'>KYC Case</h1><h2 id='87e1fa1612'>资源描述</h2><h3 id='kyc-case-2'>KYC Case</h3>
+<h1 id='kyc-case'>KYC Case</h1><h2 id='87e1fa1612'>资源描述</h2><h3 id='kyc-create-case'>KYC Create Case</h3>
 <blockquote>
 <p>Sample</p>
 </blockquote>
@@ -407,6 +407,69 @@ All request bodies should have content type application/json and be valid JSON.<
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>客户创建KYC Case，包含有用户个人或业务实体的基本信息。</p>
+
+<table><thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>必须</th>
+<th>描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>externalCaseId</td>
+<td>string</td>
+<td>true</td>
+<td>客户自己可以选择的外部Id，字符长度最大36位Unicode</td>
+</tr>
+<tr>
+<td>screenType</td>
+<td>string(ENUM)</td>
+<td>true</td>
+<td>Case的扫描类型，为枚举字符串，选择为<code>INDIVIDUAL, ORGANISATION</code></td>
+</tr>
+<tr>
+<td>fullName</td>
+<td>string</td>
+<td>true</td>
+<td>扫描对象的全称，个体名字或者实体名字,字符长度最大250位Unicode</td>
+</tr>
+<tr>
+<td>individualInfo</td>
+<td>object</td>
+<td>false</td>
+<td>用户个体的信息, 二选一</td>
+</tr>
+<tr>
+<td>organizationInfo</td>
+<td>object</td>
+<td>false</td>
+<td>业务实体的信息, 二选一</td>
+</tr>
+</tbody></table>
+<h3 id='kyc-get-case'>KYC Get Case</h3>
+<blockquote>
+<p>Sample</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"externalCaseId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"243d19cf-562f-4060-89fa-1d35a7723c3e"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"screenType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INDIVIDUAL"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">INDIVIDUAL</span><span class="p">,</span><span class="w"> </span><span class="err">ORGANISATION</span><span class="w">
+    </span><span class="nl">"fullName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"individualInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MALE"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"dob"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2002-02-02"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"nationality"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JPN"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"residentialCountry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HKG"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"organizationInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nl">"suggestion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUGGEST_TO_ACCEPT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"suggestionComment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"resolve by operator"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"decision"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACCEPT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"decisionComment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"default comment"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"COMPLETE"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>客户查询KYC Case，包含case的处理意见。</p>
 
 <table><thead>
 <tr>
@@ -446,7 +509,7 @@ All request bodies should have content type application/json and be valid JSON.<
 <td>系统建议 <code>SUGGEST_TO_ACCEPT,SUGGEST_TO_REJECT,NO_SUGGESTION</code></td>
 </tr>
 <tr>
-<td>suggestion_comment</td>
+<td>suggestionComment</td>
 <td>string</td>
 <td>系统建议的人工备注</td>
 </tr>
@@ -456,9 +519,14 @@ All request bodies should have content type application/json and be valid JSON.<
 <td>客户决定 <code>REJECT, ACCEPT</code></td>
 </tr>
 <tr>
-<td>decision_comment</td>
+<td>decisionComment</td>
 <td>string</td>
 <td>客户决定的人工备注</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string(ENUM)</td>
+<td>case状态 <code>NEW,PENDING,WAITING_APPROVAL,COMPLETE</code></td>
 </tr>
 <tr>
 <td>ogs</td>
@@ -473,31 +541,36 @@ All request bodies should have content type application/json and be valid JSON.<
 <tr>
 <th>字段</th>
 <th>类型</th>
+<th>必须</th>
 <th>描述</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>gender</td>
-<td>string(ENUM)</td>
+<td>string</td>
+<td>false</td>
 <td>性别，为枚举字符串，选择为<code>MALE, FEMALE</code></td>
 </tr>
 <tr>
 <td>dob</td>
-<td>日期</td>
+<td>string</td>
+<td>false</td>
 <td>Date of Birth 生日， yyyy-MM-dd</td>
 </tr>
 <tr>
 <td>nationality</td>
 <td>string (alpha-3)</td>
+<td>false</td>
 <td>用户的国籍 (ISO-3166-1 alpha-3)</td>
 </tr>
 <tr>
 <td>residentialCountry</td>
 <td>string (alpha-3)</td>
+<td>false</td>
 <td>用户的居住国家 (ISO-3166-1 alpha-3)</td>
 </tr>
 </tbody></table>
-<h2 id='kyc-case-3'>创建 KYC Case</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://caas.cabital.com/api/v1/cases"</span> <span class="se">\</span>
+<h2 id='kyc-case-2'>创建 KYC Case</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://caas.cabital.com/api/v1/cases"</span> <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"ACCESS-KEY: YOUR_KEY"</span> <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"ACCESS-SIGN: SIGN_KEY"</span> <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"ACCESS-TIMESTAMP: 1623828308"</span> <span class="se">\</span>
@@ -505,16 +578,22 @@ All request bodies should have content type application/json and be valid JSON.<
 </code></pre></div>
 <blockquote>
 <p>HTTP返回 (201)</p>
-</blockquote>
 
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"caseSystemId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"243d19cf-562f-4060-89fa-1d35a7723c3e"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">UUID</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEW"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <p>创建 KYC Case</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>POST https://caas.cabital.com/api/v1/cases</code></p>
 
 <aside class="success">
-客户在打开 _Zero Footprint_ 的配置下，创建 KYC Case 将自动触发一次性扫描!
+客户在打开<Zero Footprint</i> 的配置下，创建 KYC Case 将自动触发一次性扫描!
 </aside>
-<h2 id='kyc-case-4'>获取特定的 KYC Case</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://caas.cabital.com/api/v1/cases/2"</span> <span class="se">\</span>
+<h2 id='kyc-case-3'>获取特定的 KYC Case</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://caas.cabital.com/api/v1/cases/2"</span> <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"ACCESS-KEY: YOUR_KEY"</span> <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"ACCESS-SIGN: SIGN_KEY"</span> <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"ACCESS-TIMESTAMP: 1623828308"</span>
@@ -532,12 +611,15 @@ All request bodies should have content type application/json and be valid JSON.<
       </span><span class="nl">"nationality"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JPN"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"residentialCountry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HKG"</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="nl">"organizationInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<p>This endpoint retrieves a specific kitten.</p>
-<h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET http://caas.cabital.com/api/v1/cases/&lt;ID&gt;</code></p>
+  </span><span class="nl">"organizationInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+  </span><span class="nl">"suggestion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUGGEST_TO_ACCEPT"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"suggestionComment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"resolve by operator"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"decision"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACCEPT"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"decisionComment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"default comment"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"COMPLETE"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='http-request-2'>HTTP Request</h3>
+<p><code>GET http://caas.cabital.com/api/v1/cases/{caseSystemId}</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -546,11 +628,11 @@ All request bodies should have content type application/json and be valid JSON.<
 </tr>
 </thead><tbody>
 <tr>
-<td>UUID</td>
-<td>KYC Case UUID</td>
+<td>caseSystemId</td>
+<td>KYC Case system UUID</td>
 </tr>
 </tbody></table>
-<h2 id='kyc-case-5'>打开特定 KYC Case 的持续性扫描</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://caas.cabital.com/api/v1/cases/6d92e7b4-715c-4ce3-a028-19f1c8c9fa6c/ogs"</span> <span class="se">\</span>
+<h2 id='kyc-case-4'>打开特定 KYC Case 的持续性扫描</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://caas.cabital.com/api/v1/cases/6d92e7b4-715c-4ce3-a028-19f1c8c9fa6c/ogs"</span> <span class="se">\</span>
   <span class="nt">-X</span> POST <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"ACCESS-KEY: YOUR_KEY"</span> <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"ACCESS-SIGN: SIGN_KEY"</span> <span class="se">\</span>
@@ -562,7 +644,7 @@ All request bodies should have content type application/json and be valid JSON.<
 
 <p>针对特定KYC Case打开持续扫描</p>
 <h3 id='http-request-3'>HTTP Request</h3>
-<p><code>POST https://caas.cabital.com/api/v1/cases/&lt;UUID&gt;/ogs</code></p>
+<p><code>POST https://caas.cabital.com/api/v1/cases/{caseSystemId}/ogs</code></p>
 <h3 id='url-parameters-2'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -571,11 +653,11 @@ All request bodies should have content type application/json and be valid JSON.<
 </tr>
 </thead><tbody>
 <tr>
-<td>UUID</td>
-<td>KYC Case UUID</td>
+<td>caseSystemId</td>
+<td>KYC Case system UUID</td>
 </tr>
 </tbody></table>
-<h2 id='kyc-case-6'>关闭特定 KYC Case 的持续性扫描</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://caas.cabital.com/api/v1/cases/6d92e7b4-715c-4ce3-a028-19f1c8c9fa6c/ogs"</span> <span class="se">\</span>
+<h2 id='kyc-case-5'>关闭特定 KYC Case 的持续性扫描</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://caas.cabital.com/api/v1/cases/6d92e7b4-715c-4ce3-a028-19f1c8c9fa6c/ogs"</span> <span class="se">\</span>
   <span class="nt">-X</span> DELETE <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
 </code></pre></div>
@@ -585,7 +667,7 @@ All request bodies should have content type application/json and be valid JSON.<
 
 <p>针对特定KYC Case关闭持续扫描</p>
 <h3 id='http-request-4'>HTTP Request</h3>
-<p><code>POST https://caas.cabital.com/api/v1/cases/&lt;UUID&gt;/ogs</code></p>
+<p><code>DELETE https://caas.cabital.com/api/v1/cases/{caseSystemId}/ogs</code></p>
 <h3 id='url-parameters-3'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -594,11 +676,11 @@ All request bodies should have content type application/json and be valid JSON.<
 </tr>
 </thead><tbody>
 <tr>
-<td>UUID</td>
-<td>KYC Case UUID</td>
+<td>caseSystemId</td>
+<td>KYC Case system UUID</td>
 </tr>
 </tbody></table>
-<h2 id='kyc-case-7'>提供特定 KYC Case 的最终决定</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://caas.cabital.com/api/v1/cases/6d92e7b4-715c-4ce3-a028-19f1c8c9fa6c/decision"</span> <span class="se">\</span>
+<h2 id='kyc-case-6'>提供特定 KYC Case 的最终决定</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://caas.cabital.com/api/v1/cases/6d92e7b4-715c-4ce3-a028-19f1c8c9fa6c/decision"</span> <span class="se">\</span>
   <span class="nt">-X</span> POST <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
 </code></pre></div>
@@ -613,13 +695,13 @@ All request bodies should have content type application/json and be valid JSON.<
 <li>REJECT</li>
 </ul>
 <h3 id='http-request-5'>HTTP Request</h3>
-<p><code>POST https://caas.cabital.com/api/v1/cases/&lt;UUID&gt;/decision</code></p>
+<p><code>POST https://caas.cabital.com/api/v1/cases/{caseSystemId}/decision</code></p>
 
 <blockquote>
 <p>Request Body</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"caseResult"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"ACCEPT"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"decision"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"ACCEPT"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"comment"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"决策备注"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='url-parameters-4'>URL Parameters</h3>
@@ -630,23 +712,23 @@ All request bodies should have content type application/json and be valid JSON.<
 </tr>
 </thead><tbody>
 <tr>
-<td>UUID</td>
-<td>KYC Case UUID</td>
+<td>caseSystemId</td>
+<td>KYC Case system UUID</td>
 </tr>
 </tbody></table>
 <h1 id='webhook'>Webhook</h1>
 <p>webhook 预计平均会在 3-5 分钟后到达，但理论上可能需要长达 24 小时。如果由于某种原因您错过了 webhook，请不要担心：我们会记录尝试发送的所有内容，并且可以随时重新发送失败的 webhook。如果 webhook 请求失败，我们会尝试重新发送四次：5 分钟、1 小时、5 小时和 18 小时后，直到请求成功获得 2XX 返回码的。</p>
 
 <p>我们建议您等待 webhook 不超过一天，然后向我们的服务器发送请求以获取有关资源的状态信息。</p>
-<h2 id='kyc-case-8'>KYC Case 扫描回调</h2>
+<h2 id='kyc-case-7'>KYC Case 扫描回调</h2>
 <blockquote>
 <p>HTTP Payload</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"caseSystemId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6d92e7b4-715c-4ce3-a028-19f1c8c9fa6c"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"caseSuggestion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUGGEST_TO_REJECT"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User is okay to me."</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"externalCaseId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"243d19cf-562f-4060-89fa-1d35a7723c3e"</span><span class="w">
+    </span><span class="nl">"externalCaseId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"243d19cf-562f-4060-89fa-1d35a7723c3e"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"suggestion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUGGEST_TO_REJECT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User is okay to me."</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>case的状态发生变化时，我们将向您发送带有 JSON 负载的 POST 请求到集成时提供给我们的 URL。</p>
