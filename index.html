@@ -341,7 +341,10 @@
             <a href="#webhook" class="toc-h1 toc-link" data-title="Webhook">Webhook</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#kyc-case-7" class="toc-h2 toc-link" data-title="KYC Case 扫描回调">KYC Case 扫描回调</a>
+                    <a href="#webhooks-types" class="toc-h2 toc-link" data-title="Webhooks types">Webhooks types</a>
+                  </li>
+                  <li>
+                    <a href="#kyc-case-7" class="toc-h2 toc-link" data-title="KYC Case 扫描回调示例">KYC Case 扫描回调示例</a>
                   </li>
               </ul>
           </li>
@@ -394,7 +397,7 @@
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"externalCaseId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"243d19cf-562f-4060-89fa-1d35a7723c3e"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"screenType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INDIVIDUAL"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">INDIVIDUAL</span><span class="p">,</span><span class="w"> </span><span class="err">ORGANISATION</span><span class="w">
+    </span><span class="nl">"screenType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INDIVIDUAL"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"fullName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"individualInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MALE"</span><span class="p">,</span><span class="w">
@@ -402,7 +405,9 @@
         </span><span class="nl">"nationality"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JPN"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"residentialCountry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HKG"</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"organizationInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+    </span><span class="nl">"organizationInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"registeredCountry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HKG"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>客户创建KYC Case，包含有用户个人或业务实体的基本信息。</p>
@@ -460,7 +465,9 @@
         </span><span class="nl">"nationality"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JPN"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"residentialCountry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HKG"</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"organizationInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nl">"organizationInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"registeredCountry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HKG"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
     </span><span class="nl">"suggestion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUGGEST_TO_ACCEPT"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"suggestionComment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"resolve by operator"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"decision"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACCEPT"</span><span class="p">,</span><span class="w">
@@ -569,6 +576,24 @@
 <td>用户的居住国家 (ISO-3166-1 alpha-3)</td>
 </tr>
 </tbody></table>
+<h3 id='organizationinfo'>OrganizationInfo</h3>
+<p>客户创建客户的企业用户基本信息。</p>
+
+<table><thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>必须</th>
+<th>描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>registeredCountry</td>
+<td>string (alpha-3)</td>
+<td>false</td>
+<td>企业注册国家 (ISO-3166-1 alpha-3)</td>
+</tr>
+</tbody></table>
 <h2 id='kyc-case-2'>创建 KYC Case</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://caas.cabital.com/api/v1/cases"</span> <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"ACCESS-KEY: YOUR_KEY"</span> <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"ACCESS-SIGN: SIGN_KEY"</span> <span class="se">\</span>
@@ -590,7 +615,7 @@
 <p><code>POST https://caas.cabital.com/api/v1/cases</code></p>
 
 <aside class="success">
-客户在打开<Zero Footprint</i> 的配置下，创建 KYC Case 将自动触发一次性扫描!
+客户在打开<i> Zero Footprint</i> 的配置下，创建 KYC Case 将自动触发一次性扫描!
 </aside>
 <h2 id='kyc-case-3'>获取特定的 KYC Case</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://caas.cabital.com/api/v1/cases/2"</span> <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"ACCESS-KEY: YOUR_KEY"</span> <span class="se">\</span>
@@ -601,21 +626,23 @@
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"externalCaseId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"243d19cf-562f-4060-89fa-1d35a7723c3e"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"screenType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INDIVIDUAL"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">INDIVIDUAL</span><span class="p">,</span><span class="w"> </span><span class="err">ORGANISATION</span><span class="w">
-  </span><span class="nl">"fullName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"individualInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MALE"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"dob"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2002-02-02"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"nationality"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JPN"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"residentialCountry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HKG"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nl">"organizationInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
-  </span><span class="nl">"suggestion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUGGEST_TO_ACCEPT"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"suggestionComment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"resolve by operator"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"decision"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACCEPT"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"decisionComment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"default comment"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"COMPLETE"</span><span class="w">
+    </span><span class="nl">"externalCaseId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"243d19cf-562f-4060-89fa-1d35a7723c3e"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"screenType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INDIVIDUAL"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">INDIVIDUAL</span><span class="p">,</span><span class="w"> </span><span class="err">ORGANISATION</span><span class="w">
+    </span><span class="nl">"fullName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"individualInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MALE"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"dob"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2002-02-02"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"nationality"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JPN"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"residentialCountry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HKG"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"organizationInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"registeredCountry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HKG"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"suggestion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUGGEST_TO_ACCEPT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"suggestionComment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"resolve by operator"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"decision"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACCEPT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"decisionComment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"default comment"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"COMPLETE"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='http-request-2'>HTTP Request</h3>
 <p><code>GET http://caas.cabital.com/api/v1/cases/{caseSystemId}</code></p>
@@ -719,7 +746,61 @@
 <p>webhook 预计平均会在 3-5 分钟后到达，但理论上可能需要长达 24 小时。如果由于某种原因您错过了 webhook，请不要担心：我们会记录尝试发送的所有内容，并且可以随时重新发送失败的 webhook。如果 webhook 请求失败，我们会尝试重新发送四次：5 分钟、1 小时、5 小时和 18 小时后，直到请求成功获得 2XX 返回码的。</p>
 
 <p>我们建议您等待 webhook 不超过一天，然后向我们的服务器发送请求以获取有关资源的状态信息。</p>
-<h2 id='kyc-case-7'>KYC Case 扫描回调</h2>
+<h2 id='webhooks-types'>Webhooks types</h2>
+<table><thead>
+<tr>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>CaseCreated</td>
+<td>case成功创建后通知,<code>Zero Footprint</code> model not send</td>
+</tr>
+<tr>
+<td>CasePending</td>
+<td>case成功扫描后通知</td>
+</tr>
+<tr>
+<td>CaseReviewed</td>
+<td>case产生扫描建议后通知</td>
+</tr>
+</tbody></table>
+<h2 id='kyc-case-7'>KYC Case 扫描回调示例</h2><h3 id='webhook-payload-attributes'>Webhook payload attributes</h3>
+<table><thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>必须</th>
+<th>描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>externalCaseId</td>
+<td>string</td>
+<td>true</td>
+<td>客户填写的外部Id</td>
+</tr>
+<tr>
+<td>caseSystemId</td>
+<td>string</td>
+<td>true</td>
+<td>Case的system uuid</td>
+</tr>
+<tr>
+<td>suggestion</td>
+<td>string(ENUM)</td>
+<td>false</td>
+<td>系统建议 <code>SUGGEST_TO_ACCEPT,SUGGEST_TO_REJECT,NO_SUGGESTION</code></td>
+</tr>
+<tr>
+<td>comment</td>
+<td>string</td>
+<td>false</td>
+<td>系统建议的人工备注</td>
+</tr>
+</tbody></table>
+
 <blockquote>
 <p>HTTP Payload</p>
 </blockquote>
