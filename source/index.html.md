@@ -62,7 +62,7 @@ Read more about API keys.
 ```json
 {
     "externalCaseId": "243d19cf-562f-4060-89fa-1d35a7723c3e",
-    "screenType": "INDIVIDUAL", // INDIVIDUAL, ORGANISATION
+    "screenType": "INDIVIDUAL",
     "fullName": "John Doe",
     "individualInfo": {
         "gender": "MALE",
@@ -70,7 +70,9 @@ Read more about API keys.
         "nationality": "JPN",
         "residentialCountry": "HKG"
     },
-    "organizationInfo": {}
+    "organizationInfo": {
+        "registeredCountry": "HKG"
+    }
 }
 ```
 
@@ -100,7 +102,9 @@ organizationInfo | object | false| 业务实体的信息, 二选一
         "nationality": "JPN",
         "residentialCountry": "HKG"
     },
-    "organizationInfo": {},
+    "organizationInfo": {
+        "registeredCountry": "HKG"
+    },
     "suggestion": "SUGGEST_TO_ACCEPT",
     "suggestionComment": "resolve by operator",
     "decision": "ACCEPT",
@@ -138,6 +142,17 @@ dob | string | false| Date of Birth 生日， yyyy-MM-dd
 nationality | string (alpha-3) | false| 用户的国籍 (ISO-3166-1 alpha-3)
 residentialCountry | string (alpha-3) | false| 用户的居住国家 (ISO-3166-1 alpha-3)
 
+
+### OrganizationInfo
+
+客户创建客户的企业用户基本信息。
+
+字段 | 类型 | 必须 | 描述
+--------- | --------- | ------- | -----------
+registeredCountry | string (alpha-3) | false | 企业注册国家 (ISO-3166-1 alpha-3)
+
+
+
 ## 创建 KYC Case
 
 ```shell
@@ -166,7 +181,7 @@ curl "http://caas.cabital.com/api/v1/cases" \
 `POST https://caas.cabital.com/api/v1/cases`
 
 <aside class="success">
-客户在打开<Zero Footprint</i> 的配置下，创建 KYC Case 将自动触发一次性扫描!
+客户在打开<i> Zero Footprint</i> 的配置下，创建 KYC Case 将自动触发一次性扫描!
 </aside>
 
 ## 获取特定的 KYC Case
@@ -184,21 +199,23 @@ curl "http://caas.cabital.com/api/v1/cases/2" \
 
 ```json
 {
-  "externalCaseId": "243d19cf-562f-4060-89fa-1d35a7723c3e",
-  "screenType": "INDIVIDUAL", // INDIVIDUAL, ORGANISATION
-  "fullName": "John Doe",
-  "individualInfo": {
-      "gender": "MALE",
-      "dob": "2002-02-02",
-      "nationality": "JPN",
-      "residentialCountry": "HKG"
-  },
-  "organizationInfo": {},
-  "suggestion": "SUGGEST_TO_ACCEPT",
-  "suggestionComment": "resolve by operator",
-  "decision": "ACCEPT",
-  "decisionComment": "default comment",
-  "status": "COMPLETE"
+    "externalCaseId": "243d19cf-562f-4060-89fa-1d35a7723c3e",
+    "screenType": "INDIVIDUAL", // INDIVIDUAL, ORGANISATION
+    "fullName": "John Doe",
+    "individualInfo": {
+        "gender": "MALE",
+        "dob": "2002-02-02",
+        "nationality": "JPN",
+        "residentialCountry": "HKG"
+    },
+    "organizationInfo": {
+        "registeredCountry": "HKG"
+    },
+    "suggestion": "SUGGEST_TO_ACCEPT",
+    "suggestionComment": "resolve by operator",
+    "decision": "ACCEPT",
+    "decisionComment": "default comment",
+    "status": "COMPLETE"
 }
 ```
 
@@ -302,8 +319,24 @@ caseSystemId | KYC Case system UUID
 webhook 预计平均会在 3-5 分钟后到达，但理论上可能需要长达 24 小时。如果由于某种原因您错过了 webhook，请不要担心：我们会记录尝试发送的所有内容，并且可以随时重新发送失败的 webhook。如果 webhook 请求失败，我们会尝试重新发送四次：5 分钟、1 小时、5 小时和 18 小时后，直到请求成功获得 2XX 返回码的。
 
 我们建议您等待 webhook 不超过一天，然后向我们的服务器发送请求以获取有关资源的状态信息。
-## KYC Case 扫描回调
 
+## Webhooks types
+
+类型 | 描述
+--------- | -----------
+CaseCreated | case成功创建后通知,`Zero Footprint` model not send
+CasePending | case成功扫描后通知
+CaseReviewed | case产生扫描建议后通知
+
+## KYC Case 扫描回调示例
+### Webhook payload attributes
+
+字段 | 类型 | 必须 | 描述
+--------- | ------- | ------------|-----------
+externalCaseId | string | true | 客户填写的外部Id
+caseSystemId | string | true | Case的system uuid
+suggestion | string(ENUM) | false | 系统建议 `SUGGEST_TO_ACCEPT,SUGGEST_TO_REJECT,NO_SUGGESTION`
+comment | string | false| 系统建议的人工备注
 
 > HTTP Payload
  
