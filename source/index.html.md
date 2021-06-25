@@ -10,6 +10,7 @@ toc_footers:
 
 includes:
   - errors
+  - changelog
 
 search: true
 
@@ -325,6 +326,7 @@ webhook 预计平均会在 3-5 分钟后到达，但理论上可能需要长达 
 CaseCreated | case成功创建后通知,`Zero Footprint` model not send
 CasePending | case成功扫描后通知
 CaseReviewed | case产生扫描建议后通知
+CaseCompleted | case获取客户结果后通知
 
 ## KYC Case 扫描回调示例
 ### Webhook payload attributes
