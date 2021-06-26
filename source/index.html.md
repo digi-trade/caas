@@ -115,7 +115,7 @@ organizationInfo | object | false| 业务实体的信息, 二选一
 客户查询KYC Case，包含case的处理意见。
 
 字段 | 类型 | 描述
---------- | ------- | ---------------| -----------
+--------- | ------- | ---------------
 externalCaseId | string | 客户自己可以选择的外部Id，字符长度最大36位Unicode
 screenType | string(ENUM) | Case的扫描类型，为枚举字符串，选择为`INDIVIDUAL, ORGANISATION`
 fullName | string | 扫描对象的全称，个体名字或者实体名字
@@ -162,7 +162,7 @@ curl "http://caas.cabital.com/api/v1/cases" \
   -X POST
 ```
 
-> HTTP返回 (201)
+> HTTP返回 (200)
 
 > The above command returns JSON structured like this:
 
@@ -178,6 +178,16 @@ curl "http://caas.cabital.com/api/v1/cases" \
 ### HTTP Request
 
 `POST https://caas.cabital.com/api/v1/cases`
+
+[RequestBody](#kyc-create-case)
+
+### HTTP Response
+
+字段 | 类型 | 描述
+--------- | ------- | ---------------
+caseSystemId | string | KYC Case system UUID
+status | string(ENUM) | case状态 `NEW,PENDING,WAITING_APPROVAL,COMPLETE`
+
 
 <aside class="success">
 客户在打开<i> Zero Footprint</i> 的配置下，创建 KYC Case 将自动触发一次性扫描!
@@ -223,11 +233,16 @@ curl "http://caas.cabital.com/api/v1/cases/2" \
 
 `GET http://caas.cabital.com/api/v1/cases/{caseSystemId}`
 
+
 ### URL Parameters
 
-参数 | 描述
---------- | -----------
-caseSystemId | KYC Case system UUID
+参数 | 类型 | 描述
+--------- | ----- |-----------
+caseSystemId |string|  KYC Case system UUID
+
+### HTTP Response
+
+[ResponseBody](#kyc-get-case)
 
 ## 打开特定 KYC Case 的持续性扫描
 
@@ -328,15 +343,29 @@ CasePending | case成功扫描后通知
 CaseReviewed | case产生扫描建议后通知
 CaseCompleted | case获取客户结果后通知
 
-## KYC Case 扫描回调示例
-### Webhook payload attributes
+当系统给出的建议为`NO_SUGGESTION`时，需要由具体的operator进行处理. 处理完毕，我们会将结果通过 `CaseCompleted` webhook进行通知
+
+## Webhook Payload
+
+### Normal Payload
+
+> HTTP Payload
+ 
+```json
+{
+    "caseSystemId": "6d92e7b4-715c-4ce3-a028-19f1c8c9fa6c",
+    "externalCaseId": "243d19cf-562f-4060-89fa-1d35a7723c3e"
+}
+```
+
+`CaseCreated` `CasePending` webhook payload
 
 字段 | 类型 | 必须 | 描述
 --------- | ------- | ------------|-----------
 externalCaseId | string | true | 客户填写的外部Id
 caseSystemId | string | true | Case的system uuid
-suggestion | string(ENUM) | false | 系统建议 `SUGGEST_TO_ACCEPT,SUGGEST_TO_REJECT,NO_SUGGESTION`
-comment | string | false| 系统建议的人工备注
+
+### Reviewed Payload
 
 > HTTP Payload
  
@@ -348,4 +377,32 @@ comment | string | false| 系统建议的人工备注
     "comment": "User is okay to me."
 }
 ```
+
+字段 | 类型 | 必须 | 描述
+--------- | ------- | ------------|-----------
+externalCaseId | string | true | 客户填写的外部Id
+caseSystemId | string | true | Case的system uuid
+suggestion | string(ENUM) | true | 系统建议 `SUGGEST_TO_ACCEPT,SUGGEST_TO_REJECT,NO_SUGGESTION`
+comment | string | false| 系统建议的人工备注
+
+### Completed Payload
+
+> HTTP Payload
+ 
+```json
+{
+    "caseSystemId": "6d92e7b4-715c-4ce3-a028-19f1c8c9fa6c",
+    "externalCaseId": "243d19cf-562f-4060-89fa-1d35a7723c3e",
+    "decision": "ACCEPT",
+    "comment": "User is okay to me."
+}
+```
+
+字段 | 类型 | 必须 | 描述
+--------- | ------- | ------------|-----------
+externalCaseId | string | true | 客户填写的外部Id
+caseSystemId | string | true | Case的system uuid
+decision | string(ENUM) | true | 决策 `ACCEPT,REJECT`
+comment | string | false| 决策备注
+
 case的状态发生变化时，我们将向您发送带有 JSON 负载的 POST 请求到集成时提供给我们的 URL。
