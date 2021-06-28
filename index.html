@@ -344,12 +344,23 @@
                     <a href="#webhooks-types" class="toc-h2 toc-link" data-title="Webhooks types">Webhooks types</a>
                   </li>
                   <li>
-                    <a href="#kyc-case-7" class="toc-h2 toc-link" data-title="KYC Case 扫描回调示例">KYC Case 扫描回调示例</a>
+                    <a href="#webhook-payload" class="toc-h2 toc-link" data-title="Webhook Payload">Webhook Payload</a>
                   </li>
               </ul>
           </li>
           <li>
             <a href="#128e9ff023" class="toc-h1 toc-link" data-title="错误处理">错误处理</a>
+          </li>
+          <li>
+            <a href="#5988541320" class="toc-h1 toc-link" data-title="版本变化">版本变化</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#0-1-1" class="toc-h2 toc-link" data-title="0.1.1">0.1.1</a>
+                  </li>
+                  <li>
+                    <a href="#0-1-0" class="toc-h2 toc-link" data-title="0.1.0">0.1.0</a>
+                  </li>
+              </ul>
           </li>
       </ul>
         <ul class="toc-footer">
@@ -363,10 +374,13 @@
         <h1 id='5ea2e0cde2'>简介</h1>
 <p>欢迎使用Cabital API，Cabital API 使开发人员能够将cabital专业、安全、可靠的筛查服务集成到现有工作流中，以帮助简化KYC的流程。</p>
 
-<p>API 功能简介：
-- 提供个人用户或企业用户的名单筛查能力
-- 根据合作伙伴的合规策略，进行筛查结果排查，提供建议
-- 从行业领先的数据库持续检索筛查存量客户的能力</p>
+<p>API 功能简介：</p>
+
+<ul>
+<li>提供个人用户或企业用户的名单筛查能力</li>
+<li>根据合作伙伴的合规策略，进行筛查结果排查，提供建议</li>
+<li>从行业领先的数据库持续检索筛查存量客户的能力</li>
+</ul>
 
 <p>您可以根据本文档提供的API来使用服务，支持的全部API请参见KYC Case</p>
 <h1 id='api'>API 认证</h1>
@@ -601,7 +615,7 @@
   <span class="nt">-X</span> POST
 </code></pre></div>
 <blockquote>
-<p>HTTP返回 (201)</p>
+<p>HTTP返回 (200)</p>
 
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
@@ -613,6 +627,27 @@
 <p>创建 KYC Case</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>POST https://caas.cabital.com/api/v1/cases</code></p>
+
+<p><a href="#kyc-create-case">RequestBody</a></p>
+<h3 id='http-response'>HTTP Response</h3>
+<table><thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>caseSystemId</td>
+<td>string</td>
+<td>KYC Case system UUID</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string(ENUM)</td>
+<td>case状态 <code>NEW,PENDING,WAITING_APPROVAL,COMPLETE</code></td>
+</tr>
+</tbody></table>
 
 <aside class="success">
 客户在打开<i> Zero Footprint</i> 的配置下，创建 KYC Case 将自动触发一次性扫描!
@@ -650,14 +685,18 @@
 <table><thead>
 <tr>
 <th>参数</th>
+<th>类型</th>
 <th>描述</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>caseSystemId</td>
+<td>string</td>
 <td>KYC Case system UUID</td>
 </tr>
 </tbody></table>
+<h3 id='http-response-2'>HTTP Response</h3>
+<p><a href="#kyc-get-case">ResponseBody</a></p>
 <h2 id='kyc-case-4'>打开特定 KYC Case 的持续性扫描</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://caas.cabital.com/api/v1/cases/6d92e7b4-715c-4ce3-a028-19f1c8c9fa6c/ogs"</span> <span class="se">\</span>
   <span class="nt">-X</span> POST <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"ACCESS-KEY: YOUR_KEY"</span> <span class="se">\</span>
@@ -765,8 +804,56 @@
 <td>CaseReviewed</td>
 <td>case产生扫描建议后通知</td>
 </tr>
+<tr>
+<td>CaseCompleted</td>
+<td>case获取客户结果后通知</td>
+</tr>
 </tbody></table>
-<h2 id='kyc-case-7'>KYC Case 扫描回调示例</h2><h3 id='webhook-payload-attributes'>Webhook payload attributes</h3>
+
+<p>当系统给出的建议为<code>NO_SUGGESTION</code>时，需要由具体的operator进行处理. 处理完毕，我们会将结果通过 <code>CaseCompleted</code> webhook进行通知</p>
+<h2 id='webhook-payload'>Webhook Payload</h2><h3 id='normal-payload'>Normal Payload</h3>
+<blockquote>
+<p>HTTP Payload</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"caseSystemId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6d92e7b4-715c-4ce3-a028-19f1c8c9fa6c"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"externalCaseId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"243d19cf-562f-4060-89fa-1d35a7723c3e"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><code>CaseCreated</code> <code>CasePending</code> webhook payload</p>
+
+<table><thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>必须</th>
+<th>描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>externalCaseId</td>
+<td>string</td>
+<td>true</td>
+<td>客户填写的外部Id</td>
+</tr>
+<tr>
+<td>caseSystemId</td>
+<td>string</td>
+<td>true</td>
+<td>Case的system uuid</td>
+</tr>
+</tbody></table>
+<h3 id='reviewed-payload'>Reviewed Payload</h3>
+<blockquote>
+<p>HTTP Payload</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"caseSystemId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6d92e7b4-715c-4ce3-a028-19f1c8c9fa6c"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"externalCaseId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"243d19cf-562f-4060-89fa-1d35a7723c3e"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"suggestion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUGGEST_TO_REJECT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User is okay to me."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <table><thead>
 <tr>
 <th>字段</th>
@@ -790,7 +877,7 @@
 <tr>
 <td>suggestion</td>
 <td>string(ENUM)</td>
-<td>false</td>
+<td>true</td>
 <td>系统建议 <code>SUGGEST_TO_ACCEPT,SUGGEST_TO_REJECT,NO_SUGGESTION</code></td>
 </tr>
 <tr>
@@ -800,17 +887,51 @@
 <td>系统建议的人工备注</td>
 </tr>
 </tbody></table>
-
+<h3 id='completed-payload'>Completed Payload</h3>
 <blockquote>
 <p>HTTP Payload</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"caseSystemId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6d92e7b4-715c-4ce3-a028-19f1c8c9fa6c"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"externalCaseId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"243d19cf-562f-4060-89fa-1d35a7723c3e"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"suggestion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUGGEST_TO_REJECT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"decision"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACCEPT"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User is okay to me."</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
+<table><thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>必须</th>
+<th>描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>externalCaseId</td>
+<td>string</td>
+<td>true</td>
+<td>客户填写的外部Id</td>
+</tr>
+<tr>
+<td>caseSystemId</td>
+<td>string</td>
+<td>true</td>
+<td>Case的system uuid</td>
+</tr>
+<tr>
+<td>decision</td>
+<td>string(ENUM)</td>
+<td>true</td>
+<td>决策 <code>ACCEPT,REJECT</code></td>
+</tr>
+<tr>
+<td>comment</td>
+<td>string</td>
+<td>false</td>
+<td>决策备注</td>
+</tr>
+</tbody></table>
+
 <p>case的状态发生变化时，我们将向您发送带有 JSON 负载的 POST 请求到集成时提供给我们的 URL。</p>
 <h1 id='128e9ff023'>错误处理</h1>
 <table><thead>
@@ -860,6 +981,16 @@
 <td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
 </tr>
 </tbody></table>
+<h1 id='5988541320'>版本变化</h1><h2 id='0-1-1'>0.1.1</h2>
+<ul>
+<li>Webhooks 类型增加 CaseCompleted。</li>
+<li>细化Webhook的 <a href="/#webhook-payload">Payload</a>（根据不同的事件）</li>
+<li>细化接口的响应内容，添加响应内容的内部跳转链接</li>
+</ul>
+<h2 id='0-1-0'>0.1.0</h2>
+<ul>
+<li>提供最初的 CaaS API 文档</li>
+</ul>
 
       </div>
       <div class="dark-box">
