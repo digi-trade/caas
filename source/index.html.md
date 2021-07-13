@@ -407,3 +407,7 @@ decision | string(ENUM) | true | 决策 `ACCEPT,REJECT`
 comment | string | false| 决策备注
 
 case的状态发生变化时，我们将向您发送带有 JSON 负载的 POST 请求到集成时提供给我们的 URL。
+
+## Webhook Signature
+
+Webhook 签名规则与API认证一致，请参考[API认证](#api)

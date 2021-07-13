@@ -1,5 +1,9 @@
 # 版本变化
 
+## 0.1.2
+
+- Webhook添加签名验证
+
 ## 0.1.1
 
 - Webhooks 类型增加 CaseCompleted。
