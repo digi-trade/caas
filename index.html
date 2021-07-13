@@ -346,6 +346,9 @@
                   <li>
                     <a href="#webhook-payload" class="toc-h2 toc-link" data-title="Webhook Payload">Webhook Payload</a>
                   </li>
+                  <li>
+                    <a href="#webhook-signature" class="toc-h2 toc-link" data-title="Webhook Signature">Webhook Signature</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -354,6 +357,9 @@
           <li>
             <a href="#5988541320" class="toc-h1 toc-link" data-title="版本变化">版本变化</a>
               <ul class="toc-list-h2">
+                  <li>
+                    <a href="#0-1-2" class="toc-h2 toc-link" data-title="0.1.2">0.1.2</a>
+                  </li>
                   <li>
                     <a href="#0-1-1" class="toc-h2 toc-link" data-title="0.1.1">0.1.1</a>
                   </li>
@@ -933,6 +939,8 @@
 </tbody></table>
 
 <p>case的状态发生变化时，我们将向您发送带有 JSON 负载的 POST 请求到集成时提供给我们的 URL。</p>
+<h2 id='webhook-signature'>Webhook Signature</h2>
+<p>Webhook 签名规则与API认证一致，请参考<a href="#api">API认证</a></p>
 <h1 id='128e9ff023'>错误处理</h1>
 <table><thead>
 <tr>
@@ -981,7 +989,11 @@
 <td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
 </tr>
 </tbody></table>
-<h1 id='5988541320'>版本变化</h1><h2 id='0-1-1'>0.1.1</h2>
+<h1 id='5988541320'>版本变化</h1><h2 id='0-1-2'>0.1.2</h2>
+<ul>
+<li>Webhook添加签名验证</li>
+</ul>
+<h2 id='0-1-1'>0.1.1</h2>
 <ul>
 <li>Webhooks 类型增加 CaseCompleted。</li>
 <li>细化Webhook的 <a href="/#webhook-payload">Payload</a>（根据不同的事件）</li>
