@@ -72,7 +72,8 @@ ACCESS-TIMESTAMP 以秒为单位从Unix Epoch到当前的数字，客户请求�
     },
     "organizationInfo": {
         "registeredCountry": "HKG"
-    }
+    },
+    "memo": "case memo"
 }
 ```
 
@@ -85,6 +86,7 @@ screenType | string(ENUM) | true| Case的扫描类型，为枚举字符串，选
 fullName | string | true| 扫描对象的全称，个体名字或者实体名字,字符长度最大250位Unicode
 individualInfo | object | false| 用户个体的信息, 二选一
 organizationInfo | object | false| 业务实体的信息, 二选一
+memo | string | false | 客户case的备注信息，字符长度最大255位Unicode
 
 
 ### KYC Get Case
@@ -105,6 +107,7 @@ organizationInfo | object | false| 业务实体的信息, 二选一
     "organizationInfo": {
         "registeredCountry": "HKG"
     },
+    "memo": "case memo",
     "suggestion": "SUGGEST_TO_ACCEPT",
     "suggestionComment": "resolve by operator",
     "decision": "ACCEPT",
@@ -122,6 +125,7 @@ screenType | string(ENUM) | Case的扫描类型，为枚举字符串，选择为
 fullName | string | 扫描对象的全称，个体名字或者实体名字
 individualInfo | object | 用户个体的信息, 二选一
 organizationInfo | object | 业务实体的信息, 二选一
+memo | string | 客户case的备注信息，字符长度最大255位Unicode
 suggestion | string(ENUM) | 系统建议 `SUGGEST_TO_ACCEPT,SUGGEST_TO_REJECT,NO_SUGGESTION`
 suggestionComment | string | 系统建议的人工备注
 decision | string(ENUM) | 客户决定 `REJECT, ACCEPT`
@@ -221,6 +225,7 @@ curl "http://caas.cabital.com/api/v1/cases/2" \
     "organizationInfo": {
         "registeredCountry": "HKG"
     },
+    "memo": "case memo",
     "suggestion": "SUGGEST_TO_ACCEPT",
     "suggestionComment": "resolve by operator",
     "decision": "ACCEPT",
