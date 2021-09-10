@@ -358,6 +358,9 @@
             <a href="#5988541320" class="toc-h1 toc-link" data-title="版本变化">版本变化</a>
               <ul class="toc-list-h2">
                   <li>
+                    <a href="#0-1-3" class="toc-h2 toc-link" data-title="0.1.3">0.1.3</a>
+                  </li>
+                  <li>
                     <a href="#0-1-2" class="toc-h2 toc-link" data-title="0.1.2">0.1.2</a>
                   </li>
                   <li>
@@ -427,7 +430,8 @@
     </span><span class="p">},</span><span class="w">
     </span><span class="nl">"organizationInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"registeredCountry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HKG"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"memo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"case memo"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>客户创建KYC Case，包含有用户个人或业务实体的基本信息。</p>
@@ -470,6 +474,12 @@
 <td>false</td>
 <td>业务实体的信息, 二选一</td>
 </tr>
+<tr>
+<td>memo</td>
+<td>string</td>
+<td>false</td>
+<td>客户case的备注信息，字符长度最大255位Unicode</td>
+</tr>
 </tbody></table>
 <h3 id='kyc-get-case'>KYC Get Case</h3>
 <blockquote>
@@ -488,6 +498,7 @@
     </span><span class="nl">"organizationInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"registeredCountry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HKG"</span><span class="w">
     </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"memo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"case memo"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"suggestion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUGGEST_TO_ACCEPT"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"suggestionComment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"resolve by operator"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"decision"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACCEPT"</span><span class="p">,</span><span class="w">
@@ -528,6 +539,11 @@
 <td>organizationInfo</td>
 <td>object</td>
 <td>业务实体的信息, 二选一</td>
+</tr>
+<tr>
+<td>memo</td>
+<td>string</td>
+<td>客户case的备注信息，字符长度最大255位Unicode</td>
 </tr>
 <tr>
 <td>suggestion</td>
@@ -679,6 +695,7 @@
     </span><span class="nl">"organizationInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"registeredCountry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HKG"</span><span class="w">
     </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"memo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"case memo"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"suggestion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUGGEST_TO_ACCEPT"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"suggestionComment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"resolve by operator"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"decision"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACCEPT"</span><span class="p">,</span><span class="w">
@@ -989,7 +1006,11 @@
 <td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
 </tr>
 </tbody></table>
-<h1 id='5988541320'>版本变化</h1><h2 id='0-1-2'>0.1.2</h2>
+<h1 id='5988541320'>版本变化</h1><h2 id='0-1-3'>0.1.3</h2>
+<ul>
+<li>case新增memo字段</li>
+</ul>
+<h2 id='0-1-2'>0.1.2</h2>
 <ul>
 <li>Webhook添加签名验证</li>
 </ul>
